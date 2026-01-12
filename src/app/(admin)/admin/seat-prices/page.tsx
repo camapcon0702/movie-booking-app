@@ -3,43 +3,43 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/common/Button';
-import { Plus, Edit, Trash2, AlertTriangle, Film, Star, X } from 'lucide-react';
-import { movieApi } from '@/lib/api/admin/movie';
-import { Movie } from '@/types/movie';
+import { Plus, Edit, Trash2, AlertTriangle, X, Armchair } from 'lucide-react';
+import { seatPriceApi } from '@/lib/api/admin/seatPrice';
+import { SeatPrice, SeatType } from '@/types/seat-price';
 
-export default function MovieListPage() {
-    const [movies, setMovies] = useState<Movie[]>([]);
+export default function SeatPriceListPage() {
+    const [prices, setPrices] = useState<SeatPrice[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
     
     // Delete Modal State
-    const [itemToDelete, setItemToDelete] = useState<Movie | null>(null);
+    const [itemToDelete, setItemToDelete] = useState<SeatPrice | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
 
-    const fetchMovies = async () => {
+    const fetchPrices = async () => {
         setIsLoading(true);
         try {
-            const res = await movieApi.getAllMovies();
-            setMovies(res.data);
+            const res = await seatPriceApi.getAllSeatPrices();
+            setPrices(res.data);
             setError('');
         } catch (err: any) {
-            setError(err.message || 'Không thể tải danh sách phim');
+            setError(err.message || 'Không thể tải danh sách giá ghế');
         } finally {
             setIsLoading(false);
         }
     };
 
     useEffect(() => {
-        fetchMovies();
+        fetchPrices();
     }, []);
 
     const handleDelete = async () => {
         if (!itemToDelete) return;
         setIsDeleting(true);
         try {
-            await movieApi.deleteMovie(itemToDelete.id);
+            await seatPriceApi.deleteSeatPrice(itemToDelete.id);
             setItemToDelete(null);
-            fetchMovies(); 
+            fetchPrices(); 
         } catch (err: any) {
             alert(err.message || 'Xóa thất bại'); 
         } finally {
@@ -47,16 +47,20 @@ export default function MovieListPage() {
         }
     };
 
-    const getStatusBadge = (status: string) => {
-        switch (status) {
-            case 'NOW_SHOWING':
-                return <span className="px-2 py-1 rounded-full text-xs font-bold bg-green-500/10 text-green-500">Đang chiếu</span>;
-            case 'COMING_SOON':
-                return <span className="px-2 py-1 rounded-full text-xs font-bold bg-yellow-500/10 text-yellow-500">Sắp chiếu</span>;
-            case 'STOP_SHOWING':
-                return <span className="px-2 py-1 rounded-full text-xs font-bold bg-red-500/10 text-red-500">Ngừng chiếu</span>;
+    const formatCurrency = (amount: number) => {
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+    };
+
+    const getSeatTypeBadge = (type: SeatType) => {
+        switch (type) {
+            case 'COUPLE':
+                return <span className="px-2 py-1 rounded-full text-xs font-bold bg-purple-500/10 text-purple-500 border border-purple-500/20">COUPLE (Đôi)</span>;
+            case 'VIP':
+                return <span className="px-2 py-1 rounded-full text-xs font-bold bg-yellow-500/10 text-yellow-500 border border-yellow-500/20">VIP</span>;
+            case 'NORMAL':
+                return <span className="px-2 py-1 rounded-full text-xs font-bold bg-gray-500/10 text-gray-400 border border-gray-500/20">NORMAL (Thường)</span>;
             default:
-                return <span className="px-2 py-1 rounded-full text-xs font-bold bg-gray-500/10 text-gray-500">{status}</span>;
+                return <span>{type}</span>;
         }
     };
 
@@ -64,13 +68,13 @@ export default function MovieListPage() {
         <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight">Quản lý Phim</h1>
-                    <p className="text-gray-400">Danh sách phim và trạng thái chiếu</p>
+                    <h1 className="text-3xl font-bold tracking-tight">Quản lý Giá Ghế</h1>
+                    <p className="text-gray-400">Thiết lập giá vé cho các loại ghế</p>
                 </div>
-                <Link href="/admin/movies/create">
+                <Link href="/admin/seat-prices/create">
                     <Button>
                         <Plus className="mr-2 h-4 w-4" />
-                        Thêm phim mới
+                        Thêm giá ghế
                     </Button>
                 </Link>
             </div>
@@ -88,58 +92,40 @@ export default function MovieListPage() {
                         <thead className="text-xs text-gray-400 uppercase bg-muted/50">
                             <tr>
                                 <th className="px-6 py-4">ID</th>
-                                <th className="px-6 py-4">Poster</th>
-                                <th className="px-6 py-4">Tên phim</th>
-                                <th className="px-6 py-4">Trạng thái</th>
-                                <th className="px-6 py-4">Ngày chiếu</th>
-                                <th className="px-6 py-4">Thời lượng</th>
-                                <th className="px-6 py-4">Đánh giá</th>
+                                <th className="px-6 py-4">Loại Ghế</th>
+                                <th className="px-6 py-4">Giá Vé</th>
+                                <th className="px-6 py-4">Ngày Tạo</th>
                                 <th className="px-6 py-4 text-right">Hành động</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-800">
                             {isLoading ? (
                                 <tr>
-                                    <td colSpan={8} className="px-6 py-8 text-center text-gray-400">
+                                    <td colSpan={5} className="px-6 py-8 text-center text-gray-400">
                                         Đang tải dữ liệu...
                                     </td>
                                 </tr>
-                            ) : movies.length === 0 ? (
+                            ) : prices.length === 0 ? (
                                 <tr>
-                                    <td colSpan={8} className="px-6 py-8 text-center text-gray-400">
-                                        Chưa có phim nào.
+                                    <td colSpan={5} className="px-6 py-8 text-center text-gray-400">
+                                        Chưa có giá ghế nào được cấu hình.
                                     </td>
                                 </tr>
                             ) : (
-                                movies.map((item) => (
+                                prices.map((item) => (
                                     <tr key={item.id} className="hover:bg-muted/50 transition-colors">
                                         <td className="px-6 py-4 font-medium">{item.id}</td>
                                         <td className="px-6 py-4">
-                                            {item.posterUrl ? (
-                                                <img src={item.posterUrl} alt={item.title} className="w-10 h-14 rounded object-cover" />
-                                            ) : (
-                                                <div className="w-10 h-14 rounded bg-muted flex items-center justify-center">
-                                                    <Film className="w-5 h-5 text-gray-400" />
-                                                </div>
-                                            )}
+                                            {getSeatTypeBadge(item.seatType)}
                                         </td>
-                                        <td className="px-6 py-4 font-semibold text-white max-w-xs truncate" title={item.title}>
-                                            {item.title}
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            {getStatusBadge(item.status)}
+                                        <td className="px-6 py-4 font-bold text-white">
+                                            {formatCurrency(item.price)}
                                         </td>
                                         <td className="px-6 py-4 text-gray-400">
-                                            {item.releaseDate}
-                                        </td>
-                                        <td className="px-6 py-4 text-gray-400 font-mono">
-                                            {item.durationMinutes}p
-                                        </td>
-                                         <td className="px-6 py-4 text-yellow-500 font-bold flex items-center">
-                                            {item.starNumber} <Star className="w-3 h-3 ml-1 fill-yellow-500" />
+                                            {new Date(item.createdAt).toLocaleDateString('vi-VN')}
                                         </td>
                                         <td className="px-6 py-4 text-right space-x-2">
-                                            <Link href={`/admin/movies/${item.id}`}>
+                                            <Link href={`/admin/seat-prices/${item.id}`}>
                                                 <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
                                                     <Edit className="h-4 w-4" />
                                                 </Button>
@@ -168,7 +154,7 @@ export default function MovieListPage() {
                         <div className="flex items-center justify-between mb-4">
                             <h3 className="text-lg font-semibold flex items-center">
                                 <AlertTriangle className="w-5 h-5 mr-2 text-red-500" />
-                                Xóa phim
+                                Xóa giá ghế
                             </h3>
                             <button onClick={() => setItemToDelete(null)} className="text-gray-400 hover:text-white">
                                 <X className="w-5 h-5" />
@@ -176,7 +162,7 @@ export default function MovieListPage() {
                         </div>
                         
                         <p className="text-gray-300 mb-6">
-                            Bạn có chắc chắn muốn xóa phim <span className="font-bold text-white">{itemToDelete.title}</span>?
+                            Bạn có chắc chắn muốn xóa giá cho loại ghế <span className="font-bold text-white">{itemToDelete.seatType}</span>?
                             <br/>Hành động này không thể hoàn tác.
                         </p>
 

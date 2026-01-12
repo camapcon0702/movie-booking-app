@@ -1,38 +1,25 @@
+export type MovieStatus = "NOW_SHOWING" | "COMING_SOON" | "STOP_SHOWING";
+
 export interface Movie {
-    id: string;
+    id: number;
     title: string;
-    posterUrl: string;
-    bannerUrl?: string; // Large landscape image
     description: string;
     durationMinutes: number;
     releaseDate: string;
-    rating?: number;
+    posterUrl?: string;
     trailerUrl?: string;
+    status: MovieStatus;
+    starNumber: number;
     genres: string[];
-    director?: string;
-    cast?: string[];
-    status: 'NOW_SHOWING' | 'COMING_SOON' | 'ENDED';
 }
 
-export interface Genre {
-    id: string;
-    name: string;
-}
-
-export interface Auditorium {
-    id: string;
-    name: string; // e.g. "Cinema 1"
-    totalSeats: number;
-    rows: number;
-    columns: number;
-}
-
-export interface Showtime {
-    id: string;
-    movieId: string;
-    auditoriumId: string;
-    auditoriumName: string; // denormalized for convenience
-    startTime: string; // ISO 8601
-    endTime: string;
-    priceCheck: number; // Base price
+export interface MovieRequest {
+    title: string;
+    description: string;
+    durationMinutes: number;
+    releaseDate: string;
+    trailerUrl?: string;
+    status: MovieStatus;
+    starNumber: number;
+    genreIds: number[];
 }
