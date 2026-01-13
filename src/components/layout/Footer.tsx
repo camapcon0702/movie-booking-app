@@ -8,7 +8,7 @@ export const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center space-x-2 mb-4 md:mb-0">
             <Film className="h-6 w-6 text-primary" />
-            <span className="text-lg font-bold text-foreground">CinéTix</span>
+            <span className="text-lg font-bold text-foreground">Cinema</span>
           </div>
           <div className="flex space-x-6 text-sm text-gray-400">
             <a href="#" className="hover:text-primary transition-colors">Về Chúng Tôi</a>

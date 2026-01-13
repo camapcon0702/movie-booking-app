@@ -3,6 +3,20 @@ import { User } from '@/types/user';
 const TOKEN_KEY = 'jwt_token';
 const USER_KEY = 'auth_user';
 
+// Helper to set cookie
+const setCookie = (name: string, value: string, days: number = 7) => {
+    if (typeof window === 'undefined') return;
+    const expires = new Date();
+    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+};
+
+// Helper to delete cookie
+const deleteCookie = (name: string) => {
+    if (typeof window === 'undefined') return;
+    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
+};
+
 export const storage = {
     getToken: (): string | null => {
         if (typeof window === 'undefined') return null;
@@ -12,6 +26,8 @@ export const storage = {
     setToken: (token: string) => {
         if (typeof window === 'undefined') return;
         localStorage.setItem(TOKEN_KEY, token);
+        // Also set in cookie for middleware access
+        setCookie('token', token, 7);
     },
 
     getUser: (): User | null => {
@@ -33,6 +49,8 @@ export const storage = {
         if (typeof window === 'undefined') return;
         localStorage.removeItem(TOKEN_KEY);
         localStorage.removeItem(USER_KEY);
+        // Also clear cookie
+        deleteCookie('token');
     },
 
     isAdmin: (): boolean => {

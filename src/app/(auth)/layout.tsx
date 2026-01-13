@@ -17,7 +17,7 @@ export default function AuthLayout({
         <div className="relative z-10">
            <Link href="/" className="flex items-center space-x-2">
             <Film className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold">CinéTix</span>
+            <span className="text-2xl font-bold">Cinema</span>
           </Link>
         </div>
 

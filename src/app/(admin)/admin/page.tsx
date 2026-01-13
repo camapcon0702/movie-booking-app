@@ -1,68 +1,98 @@
 import React from 'react';
-import { Users, Film, Ticket, DollarSign } from 'lucide-react';
+import Link from 'next/link';
+import {
+    Film,
+    Monitor,
+    Armchair,
+    Tags,
+    Utensils,
+    CalendarClock,
+    Ticket,
+    ChevronRight
+} from 'lucide-react';
 
-const STATS = [
-    { label: 'Tổng Doanh Thu', value: '125.000.000đ', icon: DollarSign, change: '+12.5%' },
-    { label: 'Vé Đã Bán', value: '3,450', icon: Ticket, change: '+8.2%' },
-    { label: 'Phim Đang Chiếu', value: '14', icon: Film, change: '0%' },
-    { label: 'Khách Hàng Mới', value: '520', icon: Users, change: '+22.4%' },
+const MODULES = [
+    {
+        name: 'Quản lý Phim',
+        href: '/admin/movies',
+        icon: Film,
+        description: 'Thêm, sửa, xóa và quản lý danh sách phim đang chiếu, sắp chiếu.'
+    },
+    {
+        name: 'Rạp / Phòng Chiếu',
+        href: '/admin/auditoriums',
+        icon: Monitor,
+        description: 'Quản lý thông tin rạp và các phòng chiếu phim.'
+    },
+    {
+        name: 'Giá Ghế',
+        href: '/admin/seat-prices',
+        icon: Armchair,
+        description: 'Thiết lập bảng giá vé cho từng loại ghế và loại phòng.'
+    },
+    {
+        name: 'Ghế & Sơ đồ',
+        href: '/admin/seats',
+        icon: Armchair,
+        description: 'Cấu hình sơ đồ ghế ngồi cho các phòng chiếu.'
+    },
+    {
+        name: 'Thể Loại',
+        href: '/admin/genres',
+        icon: Tags,
+        description: 'Quản lý danh mục thể loại phim.'
+    },
+    {
+        name: 'Đồ Ăn & Nước',
+        href: '/admin/foods',
+        icon: Utensils,
+        description: 'Quản lý menu đồ ăn, nước uống và combo bắp nước.'
+    },
+    {
+        name: 'Suất Chiếu',
+        href: '/admin/showtimes',
+        icon: CalendarClock,
+        description: 'Lên lịch xuất chiếu cho các phim tại phòng chiếu.'
+    },
+    {
+        name: 'Voucher',
+        href: '/admin/vouchers',
+        icon: Ticket,
+        description: 'Quản lý mã giảm giá và các chương trình khuyến mãi.'
+    },
 ];
 
 export default function AdminDashboardPage() {
-  return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold">Dashboard</h1>
-        <p className="text-gray-400">Tổng quan tình hình kinh doanh hôm nay</p>
-      </div>
+    return (
+        <div className="space-y-8">
+            <div>
+                <h1 className="text-3xl font-bold">Quản Trị Hệ Thống</h1>
+                <p className="text-gray-400">Chọn một module để bắt đầu quản lý</p>
+            </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {STATS.map((stat) => {
-              const Icon = stat.icon;
-              return (
-                  <div key={stat.label} className="bg-card p-6 rounded-xl border border-border shadow-lg">
-                      <div className="flex justify-between items-start mb-4">
-                          <div className="p-3 bg-primary/10 rounded-lg">
-                               <Icon className="w-6 h-6 text-primary" />
-                          </div>
-                          <span className="text-xs font-bold text-green-500 bg-green-500/10 px-2 py-1 rounded-full">
-                              {stat.change}
-                          </span>
-                      </div>
-                      <h3 className="text-gray-400 text-sm">{stat.label}</h3>
-                      <p className="text-2xl font-bold mt-1">{stat.value}</p>
-                  </div>
-              );
-          })}
-      </div>
-
-      {/* Recent Activity Placeholder */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-card border border-border rounded-xl p-6 h-80">
-              <h3 className="font-bold mb-4">Biểu Đồ Doanh Thu</h3>
-              <div className="w-full h-full flex items-center justify-center text-gray-500 bg-black/20 rounded-lg">
-                  [Chart Placeholder]
-              </div>
-          </div>
-           <div className="bg-card border border-border rounded-xl p-6 h-80">
-              <h3 className="font-bold mb-4">Giao Dịch Gần Đây</h3>
-               <div className="space-y-4">
-                   {[1,2,3,4].map(i => (
-                       <div key={i} className="flex justify-between items-center py-2 border-b border-white/5 last:border-0">
-                           <div className="flex items-center gap-3">
-                               <div className="w-8 h-8 rounded-full bg-gray-700" />
-                               <div>
-                                   <p className="text-sm font-medium">Khách hàng #{i}</p>
-                                   <p className="text-xs text-gray-500">Đặt 2 vé Mai</p>
-                               </div>
-                           </div>
-                           <span className="text-sm font-bold text-primary">+180.000đ</span>
-                       </div>
-                   ))}
-               </div>
-          </div>
-      </div>
-    </div>
-  );
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {MODULES.map((module) => {
+                    const Icon = module.icon;
+                    return (
+                        <Link
+                            key={module.href}
+                            href={module.href}
+                            className="group bg-card p-6 rounded-xl border border-border shadow-lg hover:border-primary/50 transition-all hover:shadow-primary/10 flex flex-col justify-between h-48"
+                        >
+                            <div>
+                                <div className="flex justify-between items-start mb-4">
+                                    <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                                        <Icon className="w-8 h-8 text-primary" />
+                                    </div>
+                                    <ChevronRight className="w-5 h-5 text-gray-500 group-hover:text-primary transition-colors opacity-0 group-hover:opacity-100" />
+                                </div>
+                                <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">{module.name}</h3>
+                                <p className="text-gray-400 text-sm line-clamp-2">{module.description}</p>
+                            </div>
+                        </Link>
+                    );
+                })}
+            </div>
+        </div>
+    );
 }

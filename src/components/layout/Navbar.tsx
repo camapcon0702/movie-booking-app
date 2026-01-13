@@ -18,9 +18,8 @@ export const Navbar = () => {
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
   const navLinks = [
-    { name: 'Đang Chiếu', href: '/' },
-    { name: 'Sắp Chiếu', href: '/upcoming' },
-    { name: 'Khuyến Mãi', href: '/vouchers' },
+    { name: 'Trang Chủ', href: '/' },
+    { name: 'Phim', href: '/movies' },
   ];
 
   const handleLogoutClick = () => {
@@ -43,7 +42,7 @@ export const Navbar = () => {
           <Link href="/" className="flex items-center space-x-2">
             <Film className="h-8 w-8 text-primary" />
             <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-emerald-400">
-              CinéTix
+              Cinema
             </span>
           </Link>
 
@@ -74,20 +73,20 @@ export const Navbar = () => {
                   </Button>
                 </Link>
                 <div className="flex items-center space-x-2">
-                    <Link href="/profile">
-                        <Button variant="ghost" size="icon" className="rounded-full" title="Hồ sơ">
-                             <UserIcon className="h-5 w-5" />
-                        </Button>
-                    </Link>
-                    <Button 
-                        variant="ghost" 
-                        size="icon" 
-                        className="rounded-full hover:bg-red-500/10 hover:text-red-500"
-                        onClick={handleLogoutClick}
-                        title="Đăng xuất"
-                    >
-                        <LogOut className="h-5 w-5" />
+                  <Link href="/profile">
+                    <Button variant="ghost" size="icon" className="rounded-full" title="Hồ sơ">
+                      <UserIcon className="h-5 w-5" />
                     </Button>
+                  </Link>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="rounded-full hover:bg-red-500/10 hover:text-red-500"
+                    onClick={handleLogoutClick}
+                    title="Đăng xuất"
+                  >
+                    <LogOut className="h-5 w-5" />
+                  </Button>
                 </div>
               </div>
             ) : (
@@ -140,8 +139,8 @@ export const Navbar = () => {
                       <UserIcon className="h-4 w-4 mr-2" /> Tài khoản
                     </Button>
                   </Link>
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     className="w-full justify-start text-red-500 hover:bg-red-500/10 hover:text-red-500"
                     onClick={handleLogoutClick}
                   >
@@ -163,8 +162,8 @@ export const Navbar = () => {
         )}
       </nav>
 
-      <LogoutModal 
-        isOpen={showLogoutModal} 
+      <LogoutModal
+        isOpen={showLogoutModal}
         onClose={() => setShowLogoutModal(false)}
         onConfirm={confirmLogout}
       />
