@@ -15,7 +15,7 @@ interface BulkCreateSeatFormProps {
 
 export const BulkCreateSeatForm: React.FC<BulkCreateSeatFormProps> = ({ auditoriumId, onSuccess }) => {
     const [seatPrices, setSeatPrices] = useState<SeatPrice[]>([]);
-    
+
     const [form, setForm] = useState({
         rowChart: '',
         fromSeat: 1,
@@ -88,14 +88,14 @@ export const BulkCreateSeatForm: React.FC<BulkCreateSeatFormProps> = ({ auditori
     return (
         <div className="bg-card border border-border rounded-lg p-6 space-y-4">
             <h3 className="text-lg font-bold border-b border-border pb-2">Thêm Ghế Theo Hàng</h3>
-            
+
             {error && (
                 <div className="text-sm p-3 bg-red-500/10 border border-red-500/20 rounded text-red-500 flex items-start">
                     <AlertTriangle className="w-4 h-4 mr-2 mt-0.5 shrink-0" />
                     <span>{error}</span>
                 </div>
             )}
-             {successMessage && (
+            {successMessage && (
                 <div className="text-sm p-3 bg-green-500/10 border border-green-500/20 rounded text-green-500">
                     {successMessage}
                 </div>
@@ -106,17 +106,17 @@ export const BulkCreateSeatForm: React.FC<BulkCreateSeatFormProps> = ({ auditori
                     <Input
                         label="Hàng Ghế (A-Z)"
                         value={form.rowChart}
-                        onChange={e => setForm({...form, rowChart: e.target.value.toUpperCase()})}
+                        onChange={e => setForm({ ...form, rowChart: e.target.value.toUpperCase() })}
                         maxLength={1}
                         placeholder="VD: A"
                         required
                     />
                     <div className="space-y-2">
-                         <label className="text-sm font-medium text-gray-300">Loại Giá Ghế</label>
-                         <select
+                        <label className="text-sm font-medium text-gray-300">Loại Giá Ghế</label>
+                        <select
                             className="flex h-11 w-full rounded-lg border border-border bg-input px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                             value={form.seatPriceId}
-                            onChange={e => setForm({...form, seatPriceId: Number(e.target.value)})}
+                            onChange={e => setForm({ ...form, seatPriceId: Number(e.target.value) })}
                             required
                         >
                             {seatPrices.map(p => (
@@ -129,20 +129,20 @@ export const BulkCreateSeatForm: React.FC<BulkCreateSeatFormProps> = ({ auditori
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                     <Input
+                    <Input
                         label="Từ ghế số"
                         type="number"
                         min="1"
                         value={form.fromSeat}
-                        onChange={e => setForm({...form, fromSeat: Number(e.target.value)})}
+                        onChange={e => setForm({ ...form, fromSeat: Number(e.target.value) })}
                         required
                     />
-                     <Input
+                    <Input
                         label="Đến ghế số"
                         type="number"
                         min="1"
                         value={form.toSeat}
-                        onChange={e => setForm({...form, toSeat: Number(e.target.value)})}
+                        onChange={e => setForm({ ...form, toSeat: Number(e.target.value) })}
                         required
                     />
                 </div>

@@ -264,6 +264,7 @@ export default function EditMoviePage() {
                             <select
                                 className="flex h-11 w-full rounded-lg border border-border bg-input px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                                 value={form.status}
+                                title="Add Genre"
                                 onChange={e => setForm({ ...form, status: e.target.value as MovieStatus })}
                                 disabled={isSaving}
                             >

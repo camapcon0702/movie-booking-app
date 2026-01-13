@@ -8,14 +8,12 @@ interface PaymentResponse {
 }
 
 export const paymentApi = {
-    // Pay with MoMo QR
     payWithMomo: async (bookingId: number): Promise<PaymentResponse> => {
         return fetcher<PaymentResponse>(`/booking/${bookingId}/momo`, {
             method: 'POST',
         });
     },
 
-    // Pay with Cash (offline)
     payWithCash: async (bookingId: number): Promise<PaymentResponse> => {
         return fetcher<PaymentResponse>(`/booking/${bookingId}/Cash`, {
             method: 'POST',
