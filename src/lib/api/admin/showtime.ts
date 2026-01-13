@@ -10,8 +10,6 @@ export const showtimeApi = {
             method: 'GET',
         });
     },
-
-    // Get showtimes by auditorium (new requirement)
     getShowtimesByAuditorium: async (auditoriumId: number): Promise<ApiResponse<Showtime[]>> => {
         return fetcher<ApiResponse<Showtime[]>>(`${BASE_PATH}/auditorium/${auditoriumId}`, {
             method: 'GET',
@@ -24,7 +22,6 @@ export const showtimeApi = {
         });
     },
 
-    // Bulk create showtimes (new requirement)
     createShowtimes: async (data: CreateShowtimeRequest): Promise<ApiResponse<Showtime[]>> => {
         return fetcher<ApiResponse<Showtime[]>>(BASE_PATH, {
             method: 'POST',
@@ -32,7 +29,6 @@ export const showtimeApi = {
         });
     },
 
-    // Legacy single showtime creation (keep for backward compatibility)
     createShowtime: async (data: ShowtimeRequest): Promise<ApiResponse<Showtime>> => {
         return fetcher<ApiResponse<Showtime>>(BASE_PATH, {
             method: 'POST',

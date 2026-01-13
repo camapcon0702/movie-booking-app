@@ -8,13 +8,11 @@ interface FetchOptions extends RequestInit {
 export async function fetcher<T>(endpoint: string, options: FetchOptions = {}): Promise<T> {
     const { params, ...init } = options;
 
-    // Construct URL with params
     const url = new URL(`${getBaseUrl()}${endpoint}`);
     if (params) {
         Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
     }
 
-    // Get token
     const token = storage.getToken();
 
     const headers = new Headers(init.headers);
@@ -22,7 +20,6 @@ export async function fetcher<T>(endpoint: string, options: FetchOptions = {}): 
         headers.set('Authorization', `Bearer ${token}`);
     }
 
-    // Default to JSON content type if not set (and not FormData)
     if (!headers.has('Content-Type') && !(init.body instanceof FormData)) {
         headers.set('Content-Type', 'application/json');
     }
@@ -33,7 +30,6 @@ export async function fetcher<T>(endpoint: string, options: FetchOptions = {}): 
             headers,
         });
 
-        // Handle 401 Unauthorized globally if needed (e.g., clear storage and redirect)
         if (response.status === 401) {
             storage.clearAuth();
             window.location.href = '/login';

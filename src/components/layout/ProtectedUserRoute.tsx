@@ -12,7 +12,6 @@ export const ProtectedUserRoute = ({ children }: { children: React.ReactNode }) 
 
   useEffect(() => {
     if (!isLoading) {
-        // Double check storage to prevent premature redirect
       const token = storage.getToken();
       if (!user && !token) {
         router.push('/login');

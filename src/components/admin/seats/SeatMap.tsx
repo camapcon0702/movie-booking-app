@@ -13,11 +13,11 @@ interface SeatMapProps {
     onDeleteRow: (rowChart: string) => void;
 }
 
-export const SeatMap: React.FC<SeatMapProps> = ({ 
-    seats, 
+export const SeatMap: React.FC<SeatMapProps> = ({
+    seats,
     selectedSeatIds,
     onSelectSeat,
-    onDeleteRow 
+    onDeleteRow
 }) => {
     // 1. Group seats by Row Chart
     const rows = React.useMemo(() => {
@@ -28,10 +28,10 @@ export const SeatMap: React.FC<SeatMapProps> = ({
             }
             grouped[seat.rowChart].push(seat);
         });
-        
+
         // Sort rows alphabetically (A, B, C...)
         const sortedKeys = Object.keys(grouped).sort();
-        
+
         // Sort seats within row by seatNumber (numeric)
         const result = sortedKeys.map(rowKey => ({
             row: rowKey,
@@ -72,11 +72,11 @@ export const SeatMap: React.FC<SeatMapProps> = ({
                 {rows.map(({ row, seats }) => (
                     <div key={row} className="flex items-center space-x-6">
                         {/* Row Label & Row Delete */}
-                         <div className="flex items-center space-x-2 shrink-0">
+                        <div className="flex items-center space-x-2 shrink-0">
                             <div className="w-8 h-8 flex items-center justify-center font-bold text-gray-400 bg-gray-900 rounded-full border border-gray-800">
                                 {row}
                             </div>
-                            <button 
+                            <button
                                 onClick={(e) => { e.stopPropagation(); onDeleteRow(row); }}
                                 className="text-gray-600 hover:text-red-500 transition-colors"
                                 title={`Xóa toàn bộ hàng ${row}`}
@@ -114,7 +114,7 @@ export const SeatMap: React.FC<SeatMapProps> = ({
                     </div>
                 ))}
             </div>
-            
+
             {/* Legend */}
             <div className="flex items-center justify-center space-x-6 mt-12 border-t border-gray-800 pt-6 text-xs text-gray-400">
                 <div className="flex items-center">

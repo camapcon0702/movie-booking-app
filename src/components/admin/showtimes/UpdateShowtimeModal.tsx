@@ -14,11 +14,11 @@ interface UpdateShowtimeModalProps {
     onSuccess: () => void;
 }
 
-export const UpdateShowtimeModal: React.FC<UpdateShowtimeModalProps> = ({ 
-    showtime, 
-    movies, 
-    onClose, 
-    onSuccess 
+export const UpdateShowtimeModal: React.FC<UpdateShowtimeModalProps> = ({
+    showtime,
+    movies,
+    onClose,
+    onSuccess
 }) => {
     const [form, setForm] = useState({
         movieId: showtime.movieId,
@@ -26,7 +26,7 @@ export const UpdateShowtimeModal: React.FC<UpdateShowtimeModalProps> = ({
         basePrice: showtime.basePrice,
         startTime: new Date(showtime.startTime).toISOString().slice(0, 16) // Format for datetime-local
     });
-    
+
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -46,8 +46,8 @@ export const UpdateShowtimeModal: React.FC<UpdateShowtimeModalProps> = ({
             await showtimeApi.updateShowtime(showtime.id, {
                 ...form,
                 // Send local datetime format with seconds
-                startTime: form.startTime.includes(':') && form.startTime.split(':').length === 2 
-                    ? form.startTime + ':00' 
+                startTime: form.startTime.includes(':') && form.startTime.split(':').length === 2
+                    ? form.startTime + ':00'
                     : form.startTime
             });
             onSuccess();
@@ -89,7 +89,7 @@ export const UpdateShowtimeModal: React.FC<UpdateShowtimeModalProps> = ({
                         <select
                             className="flex h-11 w-full rounded-lg border border-border bg-input px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                             value={form.movieId}
-                            onChange={e => setForm({...form, movieId: Number(e.target.value)})}
+                            onChange={e => setForm({ ...form, movieId: Number(e.target.value) })}
                             required
                             title="Chọn phim"
                         >
@@ -108,7 +108,7 @@ export const UpdateShowtimeModal: React.FC<UpdateShowtimeModalProps> = ({
                             step="1000"
                             className="flex h-11 w-full rounded-lg border border-border bg-input px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                             value={form.basePrice}
-                            onChange={e => setForm({...form, basePrice: Number(e.target.value)})}
+                            onChange={e => setForm({ ...form, basePrice: Number(e.target.value) })}
                             required
                         />
                     </div>
@@ -120,7 +120,7 @@ export const UpdateShowtimeModal: React.FC<UpdateShowtimeModalProps> = ({
                             type="datetime-local"
                             className="flex h-11 w-full rounded-lg border border-border bg-input px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                             value={form.startTime}
-                            onChange={e => setForm({...form, startTime: e.target.value})}
+                            onChange={e => setForm({ ...form, startTime: e.target.value })}
                             required
                         />
                     </div>

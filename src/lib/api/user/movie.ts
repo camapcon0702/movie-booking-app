@@ -5,14 +5,12 @@ import { ApiResponse } from '@/types/genre';
 const BASE_PATH = '/movies';
 
 export const movieApi = {
-    // Get all movies (public)
     getMovies: async (): Promise<ApiResponse<Movie[]>> => {
         return fetcher<ApiResponse<Movie[]>>(BASE_PATH, {
             method: 'GET',
         });
     },
 
-    // Get movies by status (public)
     getMoviesByStatus: async (status: MovieStatus): Promise<ApiResponse<Movie[]>> => {
         return fetcher<ApiResponse<Movie[]>>(`${BASE_PATH}/status`, {
             method: 'GET',
@@ -20,7 +18,6 @@ export const movieApi = {
         });
     },
 
-    // Search movies (public)
     searchMovies: async (keyword: string): Promise<ApiResponse<Movie[]>> => {
         return fetcher<ApiResponse<Movie[]>>(`${BASE_PATH}/search`, {
             method: 'GET',
@@ -28,14 +25,12 @@ export const movieApi = {
         });
     },
 
-    // Get movies by genre (public)
     getMoviesByGenre: async (genreId: number): Promise<ApiResponse<Movie[]>> => {
         return fetcher<ApiResponse<Movie[]>>(`${BASE_PATH}/genre/${genreId}`, {
             method: 'GET',
         });
     },
 
-    // Get movie by ID (public)
     getMovieById: async (id: number): Promise<ApiResponse<Movie>> => {
         return fetcher<ApiResponse<Movie>>(`${BASE_PATH}/${id}`, {
             method: 'GET',
