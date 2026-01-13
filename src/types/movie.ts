@@ -22,4 +22,5 @@ export interface MovieRequest {
     status: MovieStatus;
     starNumber: number;
     genreIds: number[];
+    posterUrl?: string;
 }

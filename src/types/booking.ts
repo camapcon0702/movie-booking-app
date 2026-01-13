@@ -1,5 +1,47 @@
-// Imports removed as they were referenced only by ID in the interfaces below
+// Backend-compatible booking types for user API
 
+export type BookingStatus = 'PENDING' | 'CONFIRMED' | 'CANCELLED';
+
+export interface BookingTicket {
+    id: number;
+    price: number;
+    seatName: string;
+    auditoriumName: string;
+    status: string;
+}
+
+export interface OrderedFood {
+    id: number;
+    name: string;
+    price: number;
+    quantity: number;
+}
+
+export interface FoodOrder {
+    foodId: number;
+    quantity: number;
+}
+
+export interface Booking {
+    id: number;
+    total: number;
+    nameMovie: string;
+    startTime: string;
+    status: BookingStatus;
+    tickets: BookingTicket[];
+    orderedFoods: OrderedFood[];
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface CreateBookingRequest {
+    showtimeId: number;
+    voucherId?: number;
+    seatId: number[];
+    orders: FoodOrder[];
+}
+
+// Legacy types (kept for compatibility if needed)
 export type SeatType = 'STANDARD' | 'VIP' | 'COUPLE';
 export type SeatStatus = 'AVAILABLE' | 'BOOKED' | 'LOCKED' | 'SELECTED';
 
@@ -27,24 +69,6 @@ export interface SelectedFood {
     quantity: number;
     name: string;
     price: number;
-}
-
-export type BookingStatus = 'PENDING' | 'CONFIRMED' | 'CANCELLED';
-
-export interface Booking {
-    id: string;
-    userId: string;
-    showtimeId: string;
-    bookingTime: string;
-    status: BookingStatus;
-    totalAmount: number;
-
-    // Denormalized details
-    movieTitle: string;
-    moviePoster: string;
-    showtimeStart: string;
-    seats: string[]; // "A1", "A2"
-    qrCode?: string;
 }
 
 export interface Voucher {

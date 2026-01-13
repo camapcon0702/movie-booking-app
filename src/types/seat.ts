@@ -11,6 +11,7 @@ export interface Seat {
     };
     createdAt: string;
     updatedAt: string;
+    booked?: boolean;
 }
 
 export interface CreateSeatRequest {

@@ -4,6 +4,10 @@ export interface Voucher {
     discountAmount?: number;
     discountPercentage?: number;
     discountMax?: number;
+    // Computed fields for easier usage
+    discountType: 'PERCENTAGE' | 'FIXED';
+    discountValue: number;
+    maxDiscount?: number;
     expiryDate: string;
     active: boolean;
     createdAt: string;

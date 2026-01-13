@@ -6,21 +6,20 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils/cn';
 import { useAuth } from '@/lib/auth/AuthContext';
 import { LogoutModal } from '@/components/common/LogoutModal';
-import { 
-    LayoutDashboard, 
-    Film, 
-    Monitor, 
-    Armchair, 
-    Tags, 
-    Utensils, 
-    CalendarClock, 
+import {
+
+    Film,
+    Monitor,
+    Armchair,
+    Tags,
+    Utensils,
+    CalendarClock,
     Ticket,
-    Settings,
     LogOut
 } from 'lucide-react';
 
 const MENU_ITEMS = [
-    { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+
     { name: 'Quản lý Phim', href: '/admin/movies', icon: Film },
     { name: 'Rạp / Phòng Chiếu', href: '/admin/auditoriums', icon: Monitor },
     { name: 'Giá Ghế', href: '/admin/seat-prices', icon: Armchair },
@@ -46,7 +45,7 @@ export const AdminSidebar = () => {
             <div className="p-6 border-b border-border">
                 <Link href="/" className="flex items-center space-x-2">
                     <Film className="h-8 w-8 text-primary" />
-                    <span className="text-xl font-bold">CinéTix Admin</span>
+                    <span className="text-xl font-bold">Cinema Admin</span>
                 </Link>
             </div>
 
@@ -54,15 +53,15 @@ export const AdminSidebar = () => {
                 {MENU_ITEMS.map((item) => {
                     const Icon = item.icon;
                     const isActive = pathname === item.href;
-                    
+
                     return (
                         <Link
                             key={item.href}
                             href={item.href}
                             className={cn(
                                 "flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors font-medium",
-                                isActive 
-                                    ? "bg-primary text-white shadow-lg shadow-primary/20" 
+                                isActive
+                                    ? "bg-primary text-white shadow-lg shadow-primary/20"
                                     : "text-gray-400 hover:bg-white/5 hover:text-white"
                             )}
                         >
@@ -74,11 +73,8 @@ export const AdminSidebar = () => {
             </nav>
 
             <div className="p-4 border-t border-border space-y-2">
-                <button className="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white w-full transition-colors">
-                    <Settings className="w-5 h-5" />
-                    <span>Cài đặt</span>
-                </button>
-                 <button 
+
+                <button
                     onClick={() => setShowLogoutModal(true)}
                     className="flex items-center space-x-3 px-4 py-3 rounded-lg text-red-500 hover:bg-red-500/10 w-full transition-colors"
                 >
@@ -87,8 +83,8 @@ export const AdminSidebar = () => {
                 </button>
             </div>
 
-            <LogoutModal 
-                isOpen={showLogoutModal} 
+            <LogoutModal
+                isOpen={showLogoutModal}
                 onClose={() => setShowLogoutModal(false)}
                 onConfirm={handleLogout}
             />

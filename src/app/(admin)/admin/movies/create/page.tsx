@@ -204,10 +204,10 @@ export default function CreateMoviePage() {
 
                     <div className="grid grid-cols-2 gap-4">
                           <Input
-                            label="Điểm đánh giá (1-5)"
+                            label="Điểm đánh giá (1-10)"
                             type="number"
                             min="1"
-                            max="5"
+                            max="10"
                             value={form.starNumber}
                             onChange={e => setForm({...form, starNumber: Number(e.target.value)})}
                             required

@@ -8,7 +8,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "CinéTix - Đặt Vé Xem Phim Online",
+  title: "Cinema - Đặt Vé Xem Phim Online",
   description: "Trải nghiệm đặt vé xem phim trực tuyến hiện đại, nhanh chóng.",
 };
 
